@@ -90,7 +90,7 @@
           (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
           ;; Allow hash to be entered  
-          (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
+          (global-set-key (kbd "M-3") #'(lambda () (interactive) (insert "#")))
 
           (use-package general)
             :config
@@ -451,7 +451,7 @@
     (let ((org-confirm-babel-evaluate nil))
       (org-babel-tangle)))
 
-(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
+(add-hook 'org-mode-hook (lambda () (add-hook #'after-save-hook #'efs/org-babel-tangle-config)))
 
 #+end_src
 
