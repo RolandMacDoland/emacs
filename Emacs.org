@@ -875,4 +875,3 @@
     :hook (dired-mode . diredfl-global-mode))
 
 #+end_src
-
