@@ -1,4 +1,12 @@
+;;; init.el --- Initialization file for Emacs -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;; Emacs Startup File --- initialization for Emacs
+
 ;; Initialize package sources
+
+
 (require 'package)
 
 (setq package-archives '(("elpy" . "http://jorgenschaefer.github.io/packages/")
@@ -65,7 +73,7 @@
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
-;; Allow hash to be entered  
+;; Allow hash to be entered
 (global-set-key (kbd "M-3") #'(lambda () (interactive) (insert "#")))
 
 (use-package general)
@@ -686,7 +694,7 @@
   (evil-collection-define-key 'normal 'dired-mode-map
     "H" 'dired-hide-dotfiles-mode))
 
-;; For nice permission coloring and overall better looks 
+;; For nice permission coloring and overall better looks
 (use-package diredfl
   :hook (dired-mode . diredfl-global-mode))
 (custom-set-faces
@@ -695,3 +703,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(provide 'init)
+
+;;; init.el ends here
