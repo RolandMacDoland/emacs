@@ -503,7 +503,9 @@
       ;;   (add-to-list 'lsp-disabled-clients 'pyls)
       ;;   (add-to-list 'lsp-enabled-clients 'jedi)))
 
-(load-file "/Users/roland/.emacs.d/llvm-mode.el")
+
+;; Adjust path to local configuration.
+(load-file "/Users/local/.emacs.d/llvm-mode.el")
 
 ;; Temporary solution to load company.el as the melpa
 ;; package seems obsolete.
