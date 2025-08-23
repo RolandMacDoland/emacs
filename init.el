@@ -7,6 +7,7 @@
                          ("org" . "https://orgmode.org/elpa/")
                          ("elpa" . "https://elpa.gnu.org/packages/")))
 
+
 (package-initialize)
 (unless package-archive-contents
   (package-refresh-contents))
@@ -504,8 +505,10 @@
       ;;   (add-to-list 'lsp-enabled-clients 'jedi)))
 
 
+;; Some packages that need to be manually downloaded.
 ;; Adjust path to local configuration.
 (load-file "/Users/local/.emacs.d/llvm-mode.el")
+(load-file "/Users/local/.emacs.d/lisp/dired-single.el")
 
 ;; Temporary solution to load company.el as the melpa
 ;; package seems obsolete.
