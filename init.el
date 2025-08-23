@@ -508,7 +508,7 @@
 ;; Some packages that need to be manually downloaded.
 ;; Adjust path to local configuration.
 (load-file "/Users/local/.emacs.d/llvm/llvm-mode.el")
-(load-file "/Users/local/.emacs.d/lisp/dired-single.el")
+(load-file "/Users/local/.emacs.d/dired/dired-single.el")
 
 ;; Temporary solution to load company.el as the melpa
 ;; package seems obsolete.
@@ -689,3 +689,9 @@
 ;; For nice permission coloring and overall better looks 
 (use-package diredfl
   :hook (dired-mode . diredfl-global-mode))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
