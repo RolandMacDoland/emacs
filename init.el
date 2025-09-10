@@ -137,13 +137,10 @@
 ;; display correctly:
 ;;
 ;; M-x all-the-icons-install-fonts
-<<<<<<< HEAD
-=======
 ;;
 ;; If you’re using nerd-icons (newer Doom Emacs versions):
 ;;
 ;; M-x nerd-icons-install-fonts
->>>>>>> ca04e10 (Latest working configuration.)
 
 (use-package all-the-icons)
 
