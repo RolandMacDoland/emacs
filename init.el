@@ -137,6 +137,13 @@
 ;; display correctly:
 ;;
 ;; M-x all-the-icons-install-fonts
+<<<<<<< HEAD
+=======
+;;
+;; If you’re using nerd-icons (newer Doom Emacs versions):
+;;
+;; M-x nerd-icons-install-fonts
+>>>>>>> ca04e10 (Latest working configuration.)
 
 (use-package all-the-icons)
 
@@ -428,34 +435,34 @@
 ;;   :ensure
 ;;   :init (exec-path-from-shell-initialize))
 
-;; (use-package dap-mode
-;;   :custom
-;;   ;; (dap-auto-configure-mode 1)
-;;   (dap-auto-configure-features '(sessions locals tooltip))
-;;   (lsp-enable-dap-auto-configure nil)
-;;   ;; :commands dap-debug
-;;   ;; :config
-;;   ;; (setq lsp-enable-dap-auto-configure nil)
-;;   ;; (require 'dap-ui)
-;;   ;; (require 'dap-node)
-;;   ;; (dap-node-setup)
-;;   ;; (dap-ui-mode 1)
-;;   ;; (dap-ui-controls-mode 1)
-;;   ;; (require 'dap-hydra)
-;;   ;; (require 'dap-cpptools)
-;;   ;; (require 'dap-gdb-lldb)
-;;   ;; (dap-gdb-lldb-setup)
-;;   ;; (dap-register-debug-template "Rust::GDB Run Configuration"
-;;   ;;   (list :type "gdb"
-;;   ;;         :request "launch"
-;;   ;;         :name "GDB::Run"
-;;   ;;         :gdbpath "rust-gdb"
-;;   ;;         :target nil
-;;   ;;         :cwd nil))
-;;   (general-define-key
-;;    :keymaps 'lsp-mode-map
-;;    :prefix lsp-keymap-prefix
-;;    "d" '(dap-hydra t :wk "debugger")))
+(use-package dap-mode
+  :custom
+  (dap-auto-configure-mode 1)
+  ;; (dap-auto-configure-features '(sessions locals tooltip))
+  (lsp-enable-dap-auto-configure nil)
+  ;; :commands dap-debug
+  ;; :config
+  ;; (setq lsp-enable-dap-auto-configure nil)
+  ;; (require 'dap-ui)
+  ;; (require 'dap-node)
+  ;; (dap-node-setup)
+  ;; (dap-ui-mode 1)
+  ;; (dap-ui-controls-mode 1)
+  ;; (require 'dap-hydra)
+  ;; (require 'dap-cpptools)
+  ;; (require 'dap-gdb-lldb)
+  ;; (dap-gdb-lldb-setup)
+  ;; (dap-register-debug-template "Rust::GDB Run Configuration"
+  ;;   (list :type "gdb"
+  ;;         :request "launch"
+  ;;         :name "GDB::Run"
+  ;;         :gdbpath "rust-gdb"
+  ;;         :target nil
+  ;;         :cwd nil))
+  (general-define-key
+   :keymaps 'lsp-mode-map
+   :prefix lsp-keymap-prefix
+   "d" '(dap-hydra t :wk "debugger")))
 ;; (dap-auto-configure-features '(sessions locals tooltip)))
 
 (use-package flycheck
@@ -496,7 +503,7 @@
   :custom
   (python-shell-interpreter "python")
   (dap-python-executable "python")
-  (dap-python-debugger 'ptvsd)
+  (dap-python-debugger 'debugpy)
   :config
   (require 'dap-python))
 ;; Python (pyright): https://emacs-lsp.github.io/lsp-pyright/
@@ -515,8 +522,8 @@
 
 ;; Some packages that need to be manually downloaded.
 ;; Adjust path to local configuration.
-(load-file "/Users/local/.emacs.d/llvm/llvm-mode.el")
-(load-file "/Users/local/.emacs.d/dired/dired-single.el")
+(load-file "/Users/roland/.emacs.d/llvm/llvm-mode.el")
+(load-file "/Users/roland/.emacs.d/dired/dired-single.el")
 
 ;; Temporary solution to load company.el as the melpa
 ;; package seems obsolete.
@@ -574,13 +581,13 @@
 ;;   ;; Activate poetry-tracking-mode when python-mode is active
 ;;   (python-mode . poetry-tracking-mode))
 
-(require 'conda)
-;; if you want interactive shell support, include:
-(conda-env-initialize-interactive-shells)
-;; if you want eshell support, include:
-(conda-env-initialize-eshell)
-;; if you want auto-activation (see below for details), include:
-(conda-env-autoactivate-mode t)
+;; (require 'conda)
+;; ;; if you want interactive shell support, include:
+;; (conda-env-initialize-interactive-shells)
+;; ;; if you want eshell support, include:
+;; (conda-env-initialize-eshell)
+;; ;; if you want auto-activation (see below for details), include:
+;; (conda-env-autoactivate-mode t)
 ;; if you want to automatically activate a conda environment on the opening of a file:
 (add-hook 'find-file-hook (lambda () (when (bound-and-true-p conda-project-env-path)
                                        (conda-env-activate-for-buffer))))
