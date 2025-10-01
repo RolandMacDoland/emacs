@@ -1,12 +1,4 @@
-;;; init.el --- Initialization file for Emacs -*- lexical-binding: t -*-
-
-;;; Commentary:
-
-;; Emacs Startup File --- initialization for Emacs
-
 ;; Initialize package sources
-
-
 (require 'package)
 
 (setq package-archives '(("elpy" . "http://jorgenschaefer.github.io/packages/")
@@ -14,7 +6,6 @@
                          ("melpa-stable" . "https://stable.melpa.org/packages/")
                          ("org" . "https://orgmode.org/elpa/")
                          ("elpa" . "https://elpa.gnu.org/packages/")))
-
 
 (package-initialize)
 (unless package-archive-contents
@@ -71,45 +62,49 @@
 (set-face-attribute 'variable-pitch nil :font "Cantarell" :height efs/default-variable-font-size :weight 'regular)
 
 ;; Make ESC quit prompts
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
-;; Allow hash to be entered
-(global-set-key (kbd "M-3") #'(lambda () (interactive) (insert "#")))
+  ;; Allow hash to be entered  
+  (global-set-key (kbd "M-3") #'(lambda () (interactive) (insert "#")))
 
-(use-package general)
-  :config
-  (general-create-definer rune/leader-keys
-    :keymaps '(normal insert visual emacs)
-    :prefix "SPC"
-    :global-prefix "C-SPC")
+  (use-package general)
+    :config
+    (general-create-definer rune/leader-keys
+      :keymaps '(normal insert visual emacs)
+      :prefix "SPC"
+      :global-prefix "C-SPC")
 
-(rune/leader-keys
-  "t"  '(:ignore t :which-key "toggles")
-  "tt" '(counsel-load-theme :which-key "choose theme")
-  "g" '(magit :which-key "git"))
+  (rune/leader-keys
+    "t"  '(:ignore t :which-key "toggles")
+    "tt" '(counsel-load-theme :which-key "choose theme")
+    "g" '(magit :which-key "git"))
 
-(use-package evil
-  :init
-  (setq evil-want-integration t)
-  (setq evil-want-keybinding nil)
-  (setq evil-want-C-u-scroll t)
-  (setq evil-want-C-i-jump nil)
-  :config
-  (evil-mode 1)
-  (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-  (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
+;; Make sure this is set BEFORE loading `evil` or `evil-collection`
+(setq evil-want-integration t)
+(setq evil-want-keybinding nil)
+  
+  (use-package evil
+    :init
+    (setq evil-want-integration t)
+    (setq evil-want-keybinding nil)
+    (setq evil-want-C-u-scroll t)
+    (setq evil-want-C-i-jump nil)
+    :config
+    (evil-mode 1)
+    (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+    (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
 
-  ;; Use visual line motions even outside of visual-line-mode buffers
-  (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-  (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
-  (evil-set-initial-state 'messages-buffer-mode 'normal)
-  (evil-set-initial-state 'dashboard-mode 'normal))
+    ;; Use visual line motions even outside of visual-line-mode buffers
+    (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+    (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+    (evil-set-initial-state 'messages-buffer-mode 'normal)
+    (evil-set-initial-state 'dashboard-mode 'normal))
 
-(use-package evil-collection
-  :after evil
-  :config
-  (evil-collection-init)
-  (setq forge-add-default-bindings nil))
+  (use-package evil-collection
+    :after evil
+    :config
+    (evil-collection-init)
+    (setq forge-add-default-bindings nil))
 
 (use-package ivy
   :diminish
@@ -137,10 +132,6 @@
 ;; display correctly:
 ;;
 ;; M-x all-the-icons-install-fonts
-;;
-;; If you’re using nerd-icons (newer Doom Emacs versions):
-;;
-;; M-x nerd-icons-install-fonts
 
 (use-package all-the-icons)
 
@@ -300,7 +291,7 @@
            "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
           ("ts" "Clocked Entry Subtask" entry (clock)
            "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
-
+	  
           ("j" "Journal Entries")
           ("jj" "Journal" entry
            (file+olp+datetree "~/Desktop/Sandbox/emacs-sandbox/OrgFiles/Journal.org")
@@ -317,7 +308,7 @@
           ("w" "Workflows")
           ("we" "Checking Email" entry (file+olp+datetree "~/Desktop/Sandbox/emacs-sandbox/OrgFiles/Journal.org")
            "* Checking Email :email:\n\n%?" :clock-in :clock-resume :empty-lines 1)
-
+	  
           ("m" "Metrics Capture")
           ("mw" "Weight" table-line (file+headline "~/Desktop/Sandbox/emacs-sandbox/OrgFiles/Metrics.org" "Weight")
            "| %U | %^{Weight} | %^{Notes} |" :kill-buffer t)))
@@ -432,34 +423,34 @@
 ;;   :ensure
 ;;   :init (exec-path-from-shell-initialize))
 
-(use-package dap-mode
-  :custom
-  (dap-auto-configure-mode 1)
-  ;; (dap-auto-configure-features '(sessions locals tooltip))
-  (lsp-enable-dap-auto-configure nil)
-  ;; :commands dap-debug
-  ;; :config
-  ;; (setq lsp-enable-dap-auto-configure nil)
-  ;; (require 'dap-ui)
-  ;; (require 'dap-node)
-  ;; (dap-node-setup)
-  ;; (dap-ui-mode 1)
-  ;; (dap-ui-controls-mode 1)
-  ;; (require 'dap-hydra)
-  ;; (require 'dap-cpptools)
-  ;; (require 'dap-gdb-lldb)
-  ;; (dap-gdb-lldb-setup)
-  ;; (dap-register-debug-template "Rust::GDB Run Configuration"
-  ;;   (list :type "gdb"
-  ;;         :request "launch"
-  ;;         :name "GDB::Run"
-  ;;         :gdbpath "rust-gdb"
-  ;;         :target nil
-  ;;         :cwd nil))
-  (general-define-key
-   :keymaps 'lsp-mode-map
-   :prefix lsp-keymap-prefix
-   "d" '(dap-hydra t :wk "debugger")))
+;; (use-package dap-mode
+;;   :custom
+;;   ;; (dap-auto-configure-mode 1)
+;;   (dap-auto-configure-features '(sessions locals tooltip))
+;;   (lsp-enable-dap-auto-configure nil)
+;;   ;; :commands dap-debug
+;;   ;; :config
+;;   ;; (setq lsp-enable-dap-auto-configure nil)
+;;   ;; (require 'dap-ui)
+;;   ;; (require 'dap-node)
+;;   ;; (dap-node-setup)
+;;   ;; (dap-ui-mode 1)
+;;   ;; (dap-ui-controls-mode 1)
+;;   ;; (require 'dap-hydra)
+;;   ;; (require 'dap-cpptools)
+;;   ;; (require 'dap-gdb-lldb)
+;;   ;; (dap-gdb-lldb-setup)
+;;   ;; (dap-register-debug-template "Rust::GDB Run Configuration"
+;;   ;;   (list :type "gdb"
+;;   ;;         :request "launch"
+;;   ;;         :name "GDB::Run"
+;;   ;;         :gdbpath "rust-gdb"
+;;   ;;         :target nil
+;;   ;;         :cwd nil))
+;;   (general-define-key
+;;    :keymaps 'lsp-mode-map
+;;    :prefix lsp-keymap-prefix
+;;    "d" '(dap-hydra t :wk "debugger")))
 ;; (dap-auto-configure-features '(sessions locals tooltip)))
 
 (use-package flycheck
@@ -500,7 +491,7 @@
   :custom
   (python-shell-interpreter "python")
   (dap-python-executable "python")
-  (dap-python-debugger 'debugpy)
+  (dap-python-debugger 'ptvsd)
   :config
   (require 'dap-python))
 ;; Python (pyright): https://emacs-lsp.github.io/lsp-pyright/
@@ -516,11 +507,7 @@
       ;;   (add-to-list 'lsp-disabled-clients 'pyls)
       ;;   (add-to-list 'lsp-enabled-clients 'jedi)))
 
-
-;; Some packages that need to be manually downloaded.
-;; Adjust path to local configuration.
 (load-file "/Users/roland/.emacs.d/llvm/llvm-mode.el")
-(load-file "/Users/roland/.emacs.d/dired/dired-single.el")
 
 ;; Temporary solution to load company.el as the melpa
 ;; package seems obsolete.
@@ -578,28 +565,38 @@
 ;;   ;; Activate poetry-tracking-mode when python-mode is active
 ;;   (python-mode . poetry-tracking-mode))
 
-;; (require 'conda)
-;; ;; if you want interactive shell support, include:
-;; (conda-env-initialize-interactive-shells)
-;; ;; if you want eshell support, include:
-;; (conda-env-initialize-eshell)
-;; ;; if you want auto-activation (see below for details), include:
-;; (conda-env-autoactivate-mode t)
-;; if you want to automatically activate a conda environment on the opening of a file:
-(add-hook 'find-file-hook (lambda () (when (bound-and-true-p conda-project-env-path)
-                                       (conda-env-activate-for-buffer))))
+(use-package conda
+  :ensure t
+  :init
+  (setq conda-anaconda-home "/Users/roland/opt/miniconda3"
+        conda-env-home-directory (expand-file-name "/Users/roland/opt/miniconda3")
+        conda-env-subdirectory "envs")
+  :config
+  ;; Initialize conda support
+  (conda-env-initialize-interactive-shells)
+  (conda-env-initialize-eshell)
+  (conda-env-autoactivate-mode t)
+  (add-hook 'find-file-hook
+            (lambda ()
+              (when (bound-and-true-p conda-project-env-path)
+                (conda-env-activate-for-buffer)))))
+  ;; (require 'conda)
+  ;; ;; if you want interactive shell support, include:
+  ;; (conda-env-initialize-interactive-shells)
+  ;; ;; if you want eshell support, include:
+  ;; (conda-env-initialize-eshell)
+  ;; ;; if you want auto-activation (see below for details), include:
+  ;; (conda-env-autoactivate-mode t)
+  ;; ;; if you want to automatically activate a conda environment on the opening of a file:
+  ;; (add-hook 'find-file-hook (lambda () (when (bound-and-true-p conda-project-env-path)
+  ;;                                        (conda-env-activate-for-buffer))))
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(conda-anaconda-home "/Users/roland/opt/miniconda3")
- '(package-selected-packages nil))
+  ;; (custom-set-variables
+  ;;  '(conda-anaconda-home "/Users/roland/opt/miniconda3"))
 
-(setq
- conda-env-home-directory (expand-file-name "/Users/roland/opt/miniconda3")
- conda-env-subdirectory "envs")
+  ;; (setq
+  ;;  conda-env-home-directory (expand-file-name "/Users/roland/opt/miniconda3")
+  ;;  conda-env-subdirectory "envs")
 
 (use-package term
     :config
@@ -670,15 +667,27 @@
   :config
   ;; Required to use dired prefixed functions like dired-mark-extensions
   (require 'dired-x)
+;;   ;; Load dired single from file.
+  (load-file "/Users/roland/.emacs.d/dired/dired-single.el")
+
   (require 'dired-single)
   (evil-collection-define-key 'normal 'dired-mode-map
     "h" 'dired-single-up-directory
     "l" 'dired-single-buffer))
 
-;; Inside `use-package dired`
+;; ;; Inside `use-package dired`
 ;; (use-package dired-single)
 
-(use-package all-the-icons-dired
+;; (use-package dired-single
+;; :load-path "/Users/roland/.emacs.d/dired/"
+;; :after dired
+;; :config
+;; (evil-collection-define-key 'normal 'dired-mode-map
+;;   "h" 'dired-single-up-directory
+;;   "l" 'dired-single-buffer))
+
+(use-package 
+  all-the-icons-dired
   :hook (dired-mode . all-the-icons-dired-mode)
   ;; Looks like it is necessary to display colored icons
   :init (setq all-the-icons-dired-monochrome nil))
@@ -698,16 +707,6 @@
   (evil-collection-define-key 'normal 'dired-mode-map
     "H" 'dired-hide-dotfiles-mode))
 
-;; For nice permission coloring and overall better looks
+;; For nice permission coloring and overall better looks 
 (use-package diredfl
   :hook (dired-mode . diredfl-global-mode))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-
-(provide 'init)
-
-;;; init.el ends here

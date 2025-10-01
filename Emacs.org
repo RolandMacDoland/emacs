@@ -86,46 +86,50 @@
 
 #+begin_src emacs-lisp
 
-          ;; Make ESC quit prompts
-          (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+  ;; Make ESC quit prompts
+  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
-          ;; Allow hash to be entered  
-          (global-set-key (kbd "M-3") #'(lambda () (interactive) (insert "#")))
+  ;; Allow hash to be entered  
+  (global-set-key (kbd "M-3") #'(lambda () (interactive) (insert "#")))
 
-          (use-package general)
-            :config
-            (general-create-definer rune/leader-keys
-              :keymaps '(normal insert visual emacs)
-              :prefix "SPC"
-              :global-prefix "C-SPC")
+  (use-package general)
+    :config
+    (general-create-definer rune/leader-keys
+      :keymaps '(normal insert visual emacs)
+      :prefix "SPC"
+      :global-prefix "C-SPC")
 
-          (rune/leader-keys
-            "t"  '(:ignore t :which-key "toggles")
-            "tt" '(counsel-load-theme :which-key "choose theme")
-            "g" '(magit :which-key "git"))
+  (rune/leader-keys
+    "t"  '(:ignore t :which-key "toggles")
+    "tt" '(counsel-load-theme :which-key "choose theme")
+    "g" '(magit :which-key "git"))
 
-          (use-package evil
-            :init
-            (setq evil-want-integration t)
-            (setq evil-want-keybinding nil)
-            (setq evil-want-C-u-scroll t)
-            (setq evil-want-C-i-jump nil)
-            :config
-            (evil-mode 1)
-            (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-            (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
+;; Make sure this is set BEFORE loading `evil` or `evil-collection`
+(setq evil-want-integration t)
+(setq evil-want-keybinding nil)
+  
+  (use-package evil
+    :init
+    (setq evil-want-integration t)
+    (setq evil-want-keybinding nil)
+    (setq evil-want-C-u-scroll t)
+    (setq evil-want-C-i-jump nil)
+    :config
+    (evil-mode 1)
+    (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+    (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
 
-            ;; Use visual line motions even outside of visual-line-mode buffers
-            (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-            (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
-            (evil-set-initial-state 'messages-buffer-mode 'normal)
-            (evil-set-initial-state 'dashboard-mode 'normal))
+    ;; Use visual line motions even outside of visual-line-mode buffers
+    (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+    (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+    (evil-set-initial-state 'messages-buffer-mode 'normal)
+    (evil-set-initial-state 'dashboard-mode 'normal))
 
-          (use-package evil-collection
-            :after evil
-            :config
-            (evil-collection-init)
-            (setq forge-add-default-bindings nil))
+  (use-package evil-collection
+    :after evil
+    :config
+    (evil-collection-init)
+    (setq forge-add-default-bindings nil))
 
 #+end_src
 
@@ -135,62 +139,62 @@
 
 #+begin_src emacs-lisp
 
-    (use-package ivy
-      :diminish
-      :bind (("C-s" . swiper)
-             :map ivy-minibuffer-map
-             ("TAB" . ivy-alt-done)
-             ("C-l" . ivy-alt-done)
-             ("C-j" . ivy-next-line)
-             ("C-k" . ivy-previous-line)
-             :map ivy-switch-buffer-map
-             ("C-k" . ivy-previous-line)
-             ("C-l" . ivy-done)
-             ("C-d" . ivy-switch-buffer-kill)
-             :map ivy-reverse-i-search-map
-             ("C-k" . ivy-previous-line)
-             ("C-d" . ivy-reverse-i-search-kill))
-      :config
-      (ivy-mode 1))
+  (use-package ivy
+    :diminish
+    :bind (("C-s" . swiper)
+           :map ivy-minibuffer-map
+           ("TAB" . ivy-alt-done)
+           ("C-l" . ivy-alt-done)
+           ("C-j" . ivy-next-line)
+           ("C-k" . ivy-previous-line)
+           :map ivy-switch-buffer-map
+           ("C-k" . ivy-previous-line)
+           ("C-l" . ivy-done)
+           ("C-d" . ivy-switch-buffer-kill)
+           :map ivy-reverse-i-search-map
+           ("C-k" . ivy-previous-line)
+           ("C-d" . ivy-reverse-i-search-kill))
+    :config
+    (ivy-mode 1))
 
-    (global-set-key (kbd "C-M-j") 'counsel-switch-buffer)
-    (define-key emacs-lisp-mode-map (kbd "C-x M-t") 'counsel-load-theme)
+  (global-set-key (kbd "C-M-j") 'counsel-switch-buffer)
+  (define-key emacs-lisp-mode-map (kbd "C-x M-t") 'counsel-load-theme)
 
-    ;; NOTE: The first time you load your configuration on a new machine, you'll
-    ;; need to run the following command interactively so that mode line icons
-    ;; display correctly:
-    ;;
-    ;; M-x all-the-icons-install-fonts
+  ;; NOTE: The first time you load your configuration on a new machine, you'll
+  ;; need to run the following command interactively so that mode line icons
+  ;; display correctly:
+  ;;
+  ;; M-x all-the-icons-install-fonts
 
-    (use-package all-the-icons)
+  (use-package all-the-icons)
 
-    (use-package doom-modeline
-      :ensure t
-      :init (doom-modeline-mode 1)
-      :custom ((doom-modeline-height 15)))
+  (use-package doom-modeline
+    :ensure t
+    :init (doom-modeline-mode 1)
+    :custom ((doom-modeline-height 15)))
 
-    (use-package doom-themes
-      :init (load-theme 'doom-dracula t))
+  (use-package doom-themes
+    :init (load-theme 'doom-dracula t))
 
-    (use-package rainbow-delimiters
-      :hook (prog-mode . rainbow-delimiters-mode))
+  (use-package rainbow-delimiters
+    :hook (prog-mode . rainbow-delimiters-mode))
 
-    (use-package which-key
-      :init (which-key-mode)
-      :diminish which-key-mode
-      :config
-      (setq which-key-idle-delay 0))
+  (use-package which-key
+    :init (which-key-mode)
+    :diminish which-key-mode
+    :config
+    (setq which-key-idle-delay 0))
 
-    (use-package ivy-rich
-      :init
-      (ivy-rich-mode 1))
+  (use-package ivy-rich
+    :init
+    (ivy-rich-mode 1))
 
-    (use-package counsel
-      :bind (("M-x" . counsel-M-x)
-             ("C-x b" . counsel-ibuffer)
-             ("C-x C-f" . counsel-find-file)
-             :map minibuffer-local-map
-             ("C-r" . 'counsel-minibuffer-history)))
+  (use-package counsel
+    :bind (("M-x" . counsel-M-x)
+           ("C-x b" . counsel-ibuffer)
+           ("C-x C-f" . counsel-find-file)
+           :map minibuffer-local-map
+           ("C-r" . 'counsel-minibuffer-history)))
 
 #+end_src
 
@@ -389,7 +393,7 @@
       (set-face-attribute (car face) nil :font "Cantarell" :weight 'regular :height (cdr face)))
   
     ;; Ensure that anything that should be fixed-pitch in Org files appears that way
-    (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+    (set-face-attribute 'org-block nil :foreground 'unspecified :inherit 'fixed-pitch)
     (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
     (set-face-attribute 'org-table nil :inherit '(shadow fixed-pitch))
     (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
@@ -445,13 +449,13 @@
 
 #+begin_src emacs-lisp
 
-;; Automatically tangle our Emacs.org config file when we save it
-(defun efs/org-babel-tangle-config ()
-    ;; Dynamic scoping to the rescue
-    (let ((org-confirm-babel-evaluate nil))
-      (org-babel-tangle)))
+  ;; Automatically tangle our Emacs.org config file when we save it
+  (defun efs/org-babel-tangle-config ()
+      ;; Dynamic scoping to the rescue
+      (let ((org-confirm-babel-evaluate nil))
+        (org-babel-tangle)))
 
-(add-hook 'org-mode-hook (lambda () (add-hook #'after-save-hook #'efs/org-babel-tangle-config)))
+  (add-hook 'org-mode-hook (lambda () (add-hook #'after-save-hook #'efs/org-babel-tangle-config)))
 
 #+end_src
 
@@ -626,7 +630,7 @@
 
 #+begin_src emacs-lisp
 
-  (load-file "/Users/roland/.emacs.d/llvm-mode.el")
+  (load-file "/Users/roland/.emacs.d/llvm/llvm-mode.el")
 
 #+end_src
 
@@ -721,24 +725,38 @@
 *** Conda
 
 #+begin_src emacs-lisp
-
-  (require 'conda)
-  ;; if you want interactive shell support, include:
+(use-package conda
+  :ensure t
+  :init
+  (setq conda-anaconda-home "/Users/roland/opt/miniconda3"
+        conda-env-home-directory (expand-file-name "/Users/roland/opt/miniconda3")
+        conda-env-subdirectory "envs")
+  :config
+  ;; Initialize conda support
   (conda-env-initialize-interactive-shells)
-  ;; if you want eshell support, include:
   (conda-env-initialize-eshell)
-  ;; if you want auto-activation (see below for details), include:
   (conda-env-autoactivate-mode t)
-  ;; if you want to automatically activate a conda environment on the opening of a file:
-  (add-hook 'find-file-hook (lambda () (when (bound-and-true-p conda-project-env-path)
-                                         (conda-env-activate-for-buffer))))
+  (add-hook 'find-file-hook
+            (lambda ()
+              (when (bound-and-true-p conda-project-env-path)
+                (conda-env-activate-for-buffer)))))
+  ;; (require 'conda)
+  ;; ;; if you want interactive shell support, include:
+  ;; (conda-env-initialize-interactive-shells)
+  ;; ;; if you want eshell support, include:
+  ;; (conda-env-initialize-eshell)
+  ;; ;; if you want auto-activation (see below for details), include:
+  ;; (conda-env-autoactivate-mode t)
+  ;; ;; if you want to automatically activate a conda environment on the opening of a file:
+  ;; (add-hook 'find-file-hook (lambda () (when (bound-and-true-p conda-project-env-path)
+  ;;                                        (conda-env-activate-for-buffer))))
 
-  (custom-set-variables
-   '(conda-anaconda-home "/Users/roland/opt/miniconda3"))
+  ;; (custom-set-variables
+  ;;  '(conda-anaconda-home "/Users/roland/opt/miniconda3"))
 
-  (setq
-   conda-env-home-directory (expand-file-name "/Users/roland/opt/miniconda3")
-   conda-env-subdirectory "envs")
+  ;; (setq
+  ;;  conda-env-home-directory (expand-file-name "/Users/roland/opt/miniconda3")
+  ;;  conda-env-subdirectory "envs")
 
 #+end_src
 
@@ -842,15 +860,27 @@
     :config
     ;; Required to use dired prefixed functions like dired-mark-extensions
     (require 'dired-x)
+  ;;   ;; Load dired single from file.
+    (load-file "/Users/roland/.emacs.d/dired/dired-single.el")
+
     (require 'dired-single)
     (evil-collection-define-key 'normal 'dired-mode-map
       "h" 'dired-single-up-directory
       "l" 'dired-single-buffer))
 
-  ;; Inside `use-package dired`
-  (use-package dired-single)
+  ;; ;; Inside `use-package dired`
+  ;; (use-package dired-single)
 
-  (use-package all-the-icons-dired
+  ;; (use-package dired-single
+  ;; :load-path "/Users/roland/.emacs.d/dired/"
+  ;; :after dired
+  ;; :config
+  ;; (evil-collection-define-key 'normal 'dired-mode-map
+  ;;   "h" 'dired-single-up-directory
+  ;;   "l" 'dired-single-buffer))
+
+  (use-package 
+    all-the-icons-dired
     :hook (dired-mode . all-the-icons-dired-mode)
     ;; Looks like it is necessary to display colored icons
     :init (setq all-the-icons-dired-monochrome nil))
